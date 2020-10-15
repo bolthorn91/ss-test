@@ -13,7 +13,6 @@ class CertificationScript {
 
     public async initializeCertification() {
         const filesData = await this.getCSVs();
-        console.log('%j', filesData)
         const users = filesData.reduce((acc: any[], current: any) => [...acc, ...current], [])
         const usersWithPdfPath: usersWithPdf[] = await Promise.all(users.map(user => ({...user, pdf: this.getLicensePdfPath(user.name)})));
     }
@@ -64,8 +63,8 @@ class CertificationScript {
                 if (err){
                         console.log(err);
                     }
-                resolve('test')
                 console.log({res});
+                resolve(res.filename)
             });
         }) 
     }
