@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test-cron": "ts-node ./src/services/cron.service.ts",
     "set_dev": "cp ./environments/dev/.env.dev ./.env",
     "dev": "npm run set_dev && nodemon ./src/index.ts",
     "start": "npm run set_dev && tsc && node ./build/src/index.js"

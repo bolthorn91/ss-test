@@ -5,7 +5,6 @@ import uploadController from '../controller/upload.controller';
 const uploadRouter =  Router()
 const upload = multer({ dest: 'uploads/' })
 
-// uploadRouter.post('/', upload.single('file'), (req, res) => uploadController.uploadFile(req, res));
-uploadRouter.post('/', upload.single('file'));
+uploadRouter.post('/', upload.single('file'), (req, res) => uploadController.uploadFile(req, res));
 
 export default uploadRouter;
