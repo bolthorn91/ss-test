@@ -14,25 +14,23 @@ class EmailService {
     }
     
     public sendLicenseEmail(email: string, name: string, pdf: string) {
-        const transporter = nodemailer.createTransport({...this.transporter,
-            attachments: [{
-                filename: 'license.pdf',
-                path: `${__dirname}/../../pdfs/${name}_${Date.now()}.pdf`,
-                contentType: 'application/pdf'
-            }],
-        });
-        console.log({transporter})
+        const transporter = nodemailer.createTransport(this.transporter);
         const mailOptions = {
             from: `"BA" <${process.env.MAIL}>`,
             to: email,
             subject: `License`,
             text: "License",
-            html: this.generateEmailTemplate()
+            html: this.generateEmailTemplate(name),
+            attachments: [{
+                filename: 'license.pdf',
+                path: `${pdf}`,
+                contentType: 'application/pdf'
+            }],
         };
         return transporter.sendMail(mailOptions);
     }
 
-    private generateEmailTemplate(): string {
+    private generateEmailTemplate(name: string): string {
         return `
         <!DOCTYPE html>
         <html lang="en">
@@ -42,7 +40,10 @@ class EmailService {
                 <title>License</title>
             </head>
             <body>
-                <section id='main-message'>This is your License</section>
+                <section id='main-message'>
+                    <p>Hello ${name}</p>
+                    <p>Here is your License!</p>
+                </section>
             </body>
         </html>
         `
